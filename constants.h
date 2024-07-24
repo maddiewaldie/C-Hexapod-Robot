@@ -1,0 +1,42 @@
+#include "libraries/servo2040/servo2040.hpp"
+
+// LED Constants
+#define BRIGHTNESS 0.4f
+
+// Leg Joints
+#define DISTAL 1
+#define MID 2
+#define PROXIMAL 3
+
+// Leg Positions
+#define LEFT_FRONT 1
+#define LEFT_MIDDLE 2
+#define LEFT_BACK 3
+#define RIGHT_FRONT 4
+#define RIGHT_MIDDLE 5
+#define RIGHT_BACK 6
+
+// Servo Ports
+#define LEFT_FRONT_DISTAL servo2040::SERVO_1
+#define LEFT_FRONT_MID servo2040::SERVO_2
+#define LEFT_FRONT_PROXIMAL servo2040::SERVO_3
+
+#define LEFT_MIDDLE_DISTAL servo2040::SERVO_4
+#define LEFT_MIDDLE_MID servo2040::SERVO_5
+#define LEFT_MIDDLE_PROXIMAL servo2040::SERVO_6
+
+#define LEFT_BACK_DISTAL servo2040::SERVO_7
+#define LEFT_BACK_MID servo2040::SERVO_8
+#define LEFT_BACK_PROXIMAL servo2040::SERVO_9
+
+#define RIGHT_FRONT_DISTAL servo2040::SERVO_10
+#define RIGHT_FRONT_MID servo2040::SERVO_11
+#define RIGHT_FRONT_PROXIMAL servo2040::SERVO_12
+
+#define RIGHT_MIDDLE_DISTAL servo2040::SERVO_13
+#define RIGHT_MIDDLE_MID servo2040::SERVO_14
+#define RIGHT_MIDDLE_PROXIMAL servo2040::SERVO_15
+
+#define RIGHT_BACK_DISTAL servo2040::SERVO_16
+#define IGHT_BACK_MID servo2040::SERVO_17
+#define RIGHT_BACK_PROXIMAL servo2040::SERVO_18
