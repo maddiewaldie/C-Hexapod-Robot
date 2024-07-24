@@ -1,32 +1,32 @@
 #ifndef LEG_H
 #define LEG_H
 
-#include "drivers/servo/servo.hpp"
+#include "servoWrapper.hpp"
 
 using namespace servo;
 
 class Leg {
     public:
-        Servo *distalServo;
-        Servo *midServo;
-        Servo *proximalServo;
-
-        Leg(int distalPort, int midPort, int proximalPort, int location);
+        Leg() : Leg(0, 0, 0, 0, false) {}
+        Leg(int distalPort, int midPort, int proximalPort, int location, bool isSpecial);
         ~Leg();
         void enableServos();
         void disableServos();
-        void homeJoint(Servo *servo);
-        void moveJoint(Servo *servo, int position);
+        void homeJoint(ServoWrapper *servo);
+        void moveJoint(ServoWrapper *servo, int position);
         void incrementJoint(int joint, int increment);
         void moveLegToHome();
+
+        ServoWrapper *distalServo;
+        ServoWrapper *midServo;
+        ServoWrapper *proximalServo;
 
     private:
         int location;
         int distalPosition;
         int midPosition;
         int proximalPosition;
-
-         void initServos();
+        bool isSpecial;
 };
 
 #endif

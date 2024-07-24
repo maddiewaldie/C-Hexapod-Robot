@@ -1,12 +1,10 @@
 cmake_minimum_required(VERSION 3.12)
 
-# Change your executable name to something creative!
-set(NAME hexapod-c++) # <-- Name your project/executable here!
+set(NAME hexapod-c++)
 
 include(pico_sdk_import.cmake)
 include(pimoroni_pico_import.cmake)
 
-# Gooey boilerplate
 project(${NAME} C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
@@ -17,7 +15,9 @@ pico_sdk_init()
 # Add your source files
 add_executable(${NAME}
     main.cpp
-    leg.cpp # <-- Add source files here!
+    servoWrapper.cpp
+    leg.cpp
+    hexapod.cpp
 )
 
 # Include required libraries
@@ -32,11 +32,10 @@ include(drivers/servo/servo_cluster)
 include(drivers/plasma/plasma)
 include(drivers/button/button)
 
-
 # Don't forget to link the libraries you need!
 target_link_libraries(${NAME}
     pimoroni_i2c
-    pico_explorer # <-- List libraries here!
+    pico_explorer
     servo
     plasma
     button

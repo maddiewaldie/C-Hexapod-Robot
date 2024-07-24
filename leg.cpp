@@ -2,30 +2,23 @@
 
 #include "constants.h"
 #include "leg.hpp"
-#include "drivers/servo/servo.hpp"
+#include "servoWrapper.hpp"
 
 using namespace servo;
 
-Leg::Leg(int distalPort, int midPort, int proximalPort, int location) {
-    distalServo = new Servo(distalPort);
-    midServo = new Servo(midPort);
-    proximalServo = new Servo(proximalPort);
+Leg::Leg(int distalPort, int midPort, int proximalPort, int location, bool isSpecial) {
+    location = location;
+    distalPosition, midPosition, proximalPosition = 0;
 
-    initServos();
+    distalServo = new ServoWrapper(distalPort, false, pio0, 0);
+    midServo = new ServoWrapper(midPort, isSpecial, pio0, 0);
+    proximalServo = new ServoWrapper(proximalPort, isSpecial, pio1, 1);
 }
 
 Leg::~Leg() {
     disableServos();
 
-    delete distalServo;
-    delete midServo;
-    delete proximalServo;
-}
-
-void Leg::initServos() {
-    distalServo->init();
-    midServo->init();
-    proximalServo->init();
+    delete distalServo, midServo, proximalServo;
 }
 
 void Leg::enableServos() {
@@ -40,11 +33,11 @@ void Leg::disableServos() {
     proximalServo->disable();
 }
 
-void Leg::homeJoint(Servo *servo) {
+void Leg::homeJoint(ServoWrapper *servo) {
     servo->value(0);
 }
 
-void Leg::moveJoint(Servo *servo, int position) {
+void Leg::moveJoint(ServoWrapper *servo, int position) {
     servo->value(position);
 }
 

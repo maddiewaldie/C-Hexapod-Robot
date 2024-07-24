@@ -1,12 +1,11 @@
-#include "pico/stdlib.h"
-#include "leg.hpp"
 #include "constants.h"
+#include "drivers/button/button.hpp"
 #include "drivers/servo/servo.hpp"
-#include "drivers/servo/servo.hpp"
-
+#include "hexapod.hpp"
+#include "leg.hpp"
 #include "libraries/servo2040/servo2040.hpp"
 #include "libraries/plasma2040/plasma2040.hpp"
-#include "drivers/button/button.hpp"
+#include "pico/stdlib.h"
 
 using namespace plasma;
 using namespace servo;
@@ -26,22 +25,17 @@ void setUpLEDs() {
 int main() {
     stdio_init_all();
     setUpLEDs();
+    
+    Hexapod *hexapod = new Hexapod();
+    hexapod->moveLeftSideForward();
+    sleep_ms(2000);
+    hexapod->moveRightSideForward();
+    sleep_ms(2000);
 
-    // test that a servo & servo cluster run independently
-    // Leg *leg1 = new Leg(LEFT_FRONT_DISTAL, LEFT_FRONT_MID, LEFT_FRONT_PROXIMAL, LEFT_FRONT);
-    // leg1-> enableServos();
-    // leg1->moveLegToHome();
-    // sleep_ms(2000);
-    // leg1->moveJoint(leg1->distalServo, 90);
-    // sleep_ms(2000);
-    // leg1->moveJoint(leg1->midServo, 45);
+    while(!user_sw.raw()) {
 
-    // ServoCluster servo18 = ServoCluster(pio0, 0, servo2040::SERVO_17, 1);
-    // servo18.init();
-    // servo18.enable_all();
-    // sleep_ms(2000);
-    // servo18.all_to_value(90);
-    // servo18.disable_all();
+    }
 
     led_bar.clear();
+    delete hexapod;
 }
