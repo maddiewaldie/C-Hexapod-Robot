@@ -21,6 +21,7 @@ class Hexapod {
         void moveLegBackward(int leg, int amount);
 
         void moveForward();
+        void moveBackward();
 
     private:
         std::map<int, Leg*> legs;

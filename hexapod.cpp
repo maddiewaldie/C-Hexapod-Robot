@@ -106,3 +106,41 @@ void Hexapod::moveForward() {
     placeLeg(RIGHT_BACK);
     sleep_ms(500);
 }
+
+void Hexapod::moveBackward() {
+    liftLeg(LEFT_FRONT, 25);
+    liftLeg(RIGHT_MIDDLE, 25);
+    liftLeg(LEFT_BACK, 25);
+    sleep_ms(500);
+
+    moveLegForward(RIGHT_FRONT, 12);
+    moveLegForward(LEFT_MIDDLE, 8);
+    moveLegForward(RIGHT_BACK, 12);
+    moveLegBackward(LEFT_FRONT, 12);
+    moveLegBackward(RIGHT_MIDDLE, 5);
+    moveLegBackward(LEFT_BACK, 12);
+    sleep_ms(500);
+
+    placeLeg(LEFT_FRONT);
+    placeLeg(RIGHT_MIDDLE);
+    placeLeg(LEFT_BACK);
+    sleep_ms(500);
+
+    liftLeg(RIGHT_FRONT, 25);
+    liftLeg(LEFT_MIDDLE, 25);
+    liftLeg(RIGHT_BACK, 25);
+    sleep_ms(500);
+
+    moveLegForward(LEFT_FRONT, 12);
+    moveLegForward(RIGHT_MIDDLE, 8);
+    moveLegForward(LEFT_BACK, 12);
+    moveLegBackward(RIGHT_FRONT, 12);
+    moveLegBackward(LEFT_MIDDLE, 5);
+    moveLegBackward(RIGHT_BACK, 12);
+    sleep_ms(500);
+
+    placeLeg(RIGHT_FRONT);
+    placeLeg(LEFT_MIDDLE);
+    placeLeg(RIGHT_BACK);
+    sleep_ms(500);
+}
