@@ -8,14 +8,16 @@
 class Hexapod {
     public:
         Hexapod();
+        ~Hexapod();
         void moveAllToHome();
         void moveLeg(int leg, int joint, int value);
         void moveLegForward(int leg);
         void moveLeftSideForward();
         void moveRightSideForward();
+        void enableServos();
 
     private:
-        std::map<int, Leg> legs;
+        std::map<int, Leg*> legs;
 };
 
 #endif

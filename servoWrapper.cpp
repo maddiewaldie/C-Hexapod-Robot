@@ -1,18 +1,15 @@
 #include "servoWrapper.hpp"
 
-ServoWrapper::ServoWrapper(int servoPort, int isCluster, PIO clusterPIO, uint clusterSM) {
-    isCluster = isCluster;
-    if (isCluster) {
-        cluster = new ServoCluster(clusterPIO, clusterSM, servoPort, 1);
-    } else {
-        servo = new Servo(servoPort);
-    }
+ServoWrapper::ServoWrapper(int servoPort, int isCluster, PIO clusterPIO, uint clusterSM)
+    : isCluster(isCluster), servoPort(servoPort), 
+      cluster(isCluster ? new ServoCluster(clusterPIO, clusterSM, servoPort, 1) : nullptr), 
+      servo(isCluster ? nullptr : new Servo(servoPort)) {
     init();
 }
 
 ServoWrapper::~ServoWrapper() {
     disable();
-    isCluster ? delete cluster : delete servo;
+    delete cluster, servo;
 }
 
 void ServoWrapper::init() {
@@ -20,25 +17,25 @@ void ServoWrapper::init() {
 }
 
 void ServoWrapper::enable() {
-    isCluster ? cluster->enable(servoPort) : servo->enable();
+    isCluster ? cluster->enable_all() : servo->enable();
 }
 
 void ServoWrapper::disable() {
-    isCluster ? cluster->disable(servoPort) : servo->disable();
+    isCluster ? cluster->disable_all() : servo->disable();
 }
 
 void ServoWrapper::value(int value) {
-    isCluster ? cluster->value(servoPort, value) : servo->value(value);
+    isCluster ? cluster->all_to_value(value) : servo->value(value);
 }
 
 void ServoWrapper::toMin() {
-    isCluster ? cluster->to_min(servoPort) : servo->to_min();
+    isCluster ? cluster->all_to_min(servoPort) : servo->to_min();
 }
 
 void ServoWrapper::toMid() {
-    isCluster ? cluster->to_mid(servoPort) : servo->to_mid();
+    isCluster ? cluster->all_to_mid(servoPort) : servo->to_mid();
 }
 
 void ServoWrapper::toMax() {
-    isCluster ? cluster->to_max(servoPort) : servo->to_max();
+    isCluster ? cluster->all_to_max(servoPort) : servo->to_max();
 }

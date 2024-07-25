@@ -27,10 +27,11 @@ int main() {
     setUpLEDs();
     
     Hexapod *hexapod = new Hexapod();
+    hexapod->enableServos();
+    hexapod->moveAllToHome();
     hexapod->moveLeftSideForward();
     sleep_ms(2000);
     hexapod->moveRightSideForward();
-    sleep_ms(2000);
 
     while(!user_sw.raw()) {
 

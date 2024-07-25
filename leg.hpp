@@ -2,6 +2,9 @@
 #define LEG_H
 
 #include "servoWrapper.hpp"
+#include "drivers/servo/servo.hpp"
+
+using namespace servo;
 
 using namespace servo;
 
@@ -16,6 +19,7 @@ class Leg {
         void moveJoint(ServoWrapper *servo, int position);
         void incrementJoint(int joint, int increment);
         void moveLegToHome();
+        void moveLegForward();
 
         ServoWrapper *distalServo;
         ServoWrapper *midServo;

@@ -3,6 +3,7 @@
 #include "constants.h"
 #include "leg.hpp"
 #include "servoWrapper.hpp"
+#include "drivers/servo/servo.hpp"
 
 using namespace servo;
 
@@ -62,4 +63,15 @@ void Leg::incrementJoint(int joint, int increment) {
             moveJoint(proximalServo, proximalPosition);
             break;
     }
+}
+
+void Leg::moveLegForward() {
+    moveJoint(distalServo, -25);
+    moveJoint(midServo, -25);
+    sleep_ms(2000);
+    moveJoint(proximalServo, 25);
+    sleep_ms(2000);
+    moveJoint(distalServo, 0);
+    moveJoint(midServo, 0);
+    sleep_ms(2000);
 }

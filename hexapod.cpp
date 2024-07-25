@@ -5,31 +5,43 @@
 
 Hexapod::Hexapod() {
     legs = {
-        {LEFT_FRONT, Leg(LEFT_FRONT_DISTAL, LEFT_FRONT_MID, LEFT_FRONT_PROXIMAL, LEFT_FRONT, false)},
-        {LEFT_MIDDLE, Leg(LEFT_MIDDLE_DISTAL, LEFT_MIDDLE_MID, LEFT_MIDDLE_PROXIMAL, LEFT_MIDDLE, false)},
-        {LEFT_BACK, Leg(LEFT_BACK_DISTAL, LEFT_BACK_MID, LEFT_BACK_PROXIMAL, LEFT_BACK, false)},
-        {RIGHT_FRONT, Leg(RIGHT_FRONT_DISTAL, RIGHT_FRONT_MID, RIGHT_FRONT_PROXIMAL, RIGHT_FRONT, false)},
-        {RIGHT_MIDDLE, Leg(RIGHT_MIDDLE_DISTAL, RIGHT_MIDDLE_MID, RIGHT_MIDDLE_PROXIMAL, RIGHT_MIDDLE, false)},
-        {RIGHT_BACK, Leg(RIGHT_BACK_DISTAL, RIGHT_BACK_MID, RIGHT_BACK_PROXIMAL, RIGHT_BACK, true)}
+        {LEFT_FRONT, new Leg(LEFT_FRONT_DISTAL, LEFT_FRONT_MID, LEFT_FRONT_PROXIMAL, LEFT_FRONT, false)},
+        {LEFT_MIDDLE, new Leg(LEFT_MIDDLE_DISTAL, LEFT_MIDDLE_MID, LEFT_MIDDLE_PROXIMAL, LEFT_MIDDLE, false)},
+        {LEFT_BACK, new Leg(LEFT_BACK_DISTAL, LEFT_BACK_MID, LEFT_BACK_PROXIMAL, LEFT_BACK, false)},
+        {RIGHT_FRONT, new Leg(RIGHT_FRONT_DISTAL, RIGHT_FRONT_MID, RIGHT_FRONT_PROXIMAL, RIGHT_FRONT, false)},
+        {RIGHT_MIDDLE, new Leg(RIGHT_MIDDLE_DISTAL, RIGHT_MIDDLE_MID, RIGHT_MIDDLE_PROXIMAL, RIGHT_MIDDLE, false)},
+        {RIGHT_BACK, new Leg(RIGHT_BACK_DISTAL, RIGHT_BACK_MID, RIGHT_BACK_PROXIMAL, RIGHT_BACK, true)}
     };
 }
 
+Hexapod::~Hexapod() {
+    for (auto& legPair : legs) {
+        delete legPair.second;
+    }
+}
+
+void Hexapod::enableServos() {
+     for (auto& legPair : legs) {
+        legPair.second->enableServos();
+    }   
+}
+
 void Hexapod::moveAllToHome() {
-    legs[LEFT_FRONT].moveLegToHome();
-    legs[LEFT_MIDDLE].moveLegToHome();
-    legs[LEFT_BACK].moveLegToHome();
-    legs[RIGHT_FRONT].moveLegToHome();
-    legs[RIGHT_MIDDLE].moveLegToHome();
-    legs[RIGHT_BACK].moveLegToHome();
+    for (auto& legPair : legs) {
+        legPair.second->moveLegToHome();
+    }
 }
 
 void Hexapod::moveLeg(int leg, int joint, int value) {
-    if (joint == DISTAL) {
-        legs[leg].moveJoint(legs[leg].distalServo, value);
-    } else if (joint == MID) {
-        legs[leg].moveJoint(legs[leg].midServo, value);
-    } else if (joint == PROXIMAL) {
-        legs[leg].moveJoint(legs[leg].proximalServo, value);
+    if (legs.find(leg) != legs.end()) {
+        Leg* selectedLeg = legs[leg];
+        if (joint == DISTAL) {
+            selectedLeg->moveJoint(selectedLeg->distalServo, value);
+        } else if (joint == MID) {
+            selectedLeg->moveJoint(selectedLeg->midServo, value);
+        } else if (joint == PROXIMAL) {
+            selectedLeg->moveJoint(selectedLeg->proximalServo, value);
+        }
     }
 }
 
