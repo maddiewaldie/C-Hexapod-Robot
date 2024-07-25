@@ -45,25 +45,64 @@ void Hexapod::moveLeg(int leg, int joint, int value) {
     }
 }
 
-void Hexapod::moveLegForward(int leg) {
-    moveLeg(leg, DISTAL, -25);
-    moveLeg(leg, MID, -25);
-    sleep_ms(2000);
-    moveLeg(leg, PROXIMAL, 25);
-    sleep_ms(2000);
+void Hexapod::liftLeg(int leg, int amount) {
+    moveLeg(leg, DISTAL, -amount);
+    moveLeg(leg, MID, -amount);
+}
+
+void Hexapod::placeLeg(int leg) {
     moveLeg(leg, DISTAL, 0);
     moveLeg(leg, MID, 0);
-    sleep_ms(2000);
 }
 
-void Hexapod::moveLeftSideForward() {
-    moveLegForward(LEFT_FRONT);
-    moveLegForward(LEFT_MIDDLE);
-    moveLegForward(LEFT_BACK);
+void Hexapod::moveLegForward(int leg, int amount) {
+    amount = (leg == RIGHT_FRONT || leg == RIGHT_MIDDLE || leg == RIGHT_BACK) ? -amount : amount;
+    moveLeg(leg, PROXIMAL, amount);
 }
 
-void Hexapod::moveRightSideForward() {
-    moveLegForward(RIGHT_FRONT);
-    moveLegForward(RIGHT_MIDDLE);
-    moveLegForward(RIGHT_BACK);
+void Hexapod::centerLeg(int leg) {
+    moveLeg(leg, PROXIMAL, 0);
+}
+
+void Hexapod::moveLegBackward(int leg, int amount) {
+    amount = (leg == RIGHT_FRONT || leg == RIGHT_MIDDLE || leg == RIGHT_BACK) ? amount : -amount;
+    moveLeg(leg, PROXIMAL, amount);
+}
+
+void Hexapod::moveForward() {
+    liftLeg(LEFT_FRONT, 25);
+    liftLeg(RIGHT_MIDDLE, 25);
+    liftLeg(LEFT_BACK, 25);
+    sleep_ms(500);
+    
+    moveLegForward(LEFT_FRONT, 12);
+    moveLegForward(RIGHT_MIDDLE, 8);
+    moveLegForward(LEFT_BACK, 12);
+    moveLegBackward(RIGHT_FRONT, 12);
+    moveLegBackward(LEFT_MIDDLE, 5);
+    moveLegBackward(RIGHT_BACK, 12);
+    sleep_ms(500);
+
+    placeLeg(LEFT_FRONT);
+    placeLeg(RIGHT_MIDDLE);
+    placeLeg(LEFT_BACK);
+    sleep_ms(500);
+
+    liftLeg(RIGHT_FRONT, 25);
+    liftLeg(LEFT_MIDDLE, 25);
+    liftLeg(RIGHT_BACK, 25);
+    sleep_ms(500);
+
+    moveLegForward(RIGHT_FRONT, 12);
+    moveLegForward(LEFT_MIDDLE, 8);
+    moveLegForward(RIGHT_BACK, 12);
+    moveLegBackward(LEFT_FRONT, 12);
+    moveLegBackward(RIGHT_MIDDLE, 5);
+    moveLegBackward(LEFT_BACK, 12);
+    sleep_ms(500);
+
+    placeLeg(RIGHT_FRONT);
+    placeLeg(LEFT_MIDDLE);
+    placeLeg(RIGHT_BACK);
+    sleep_ms(500);
 }

@@ -29,14 +29,14 @@ int main() {
     Hexapod *hexapod = new Hexapod();
     hexapod->enableServos();
     hexapod->moveAllToHome();
-    hexapod->moveLeftSideForward();
-    sleep_ms(2000);
-    hexapod->moveRightSideForward();
+    sleep_ms(1000);
+    hexapod->moveForward();
 
-    while(!user_sw.raw()) {
-
+    while(true) {
+        hexapod->moveForward();
     }
 
     led_bar.clear();
     delete hexapod;
+    sleep_ms(100);
 }

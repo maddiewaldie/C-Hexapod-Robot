@@ -9,12 +9,18 @@ class Hexapod {
     public:
         Hexapod();
         ~Hexapod();
+
+        void enableServos();
         void moveAllToHome();
         void moveLeg(int leg, int joint, int value);
-        void moveLegForward(int leg);
-        void moveLeftSideForward();
-        void moveRightSideForward();
-        void enableServos();
+        
+        void liftLeg(int leg, int amount);
+        void placeLeg(int leg);
+        void moveLegForward(int leg, int amount);
+        void centerLeg(int leg);
+        void moveLegBackward(int leg, int amount);
+
+        void moveForward();
 
     private:
         std::map<int, Leg*> legs;
